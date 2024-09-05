@@ -1,0 +1,4 @@
+typescript
+jest
+chalk
+commander

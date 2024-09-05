@@ -1,6 +1,6 @@
 import { Command } from 'commander';
 import * as fs from 'fs';
-import * as path from 'path';
+import { exec } from 'child_process';
 
 const program = new Command();
 
@@ -11,7 +11,31 @@ program
   .action(() => {
     try {
       console.log('Installing dependencies...');
-      // Example: Handle dependency installation
+      fs.readFile('userland.txt', 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading userland.txt:', err);
+            return;
+        }
+        else{
+          console.log('Dependencies:', data);
+        }
+    
+        // Split the file contents by new lines to get an array of dependencies
+        const dependencies = data.split('\n').filter(dep => dep.trim() !== '');
+        
+        // Install each dependency using npm
+        dependencies.forEach(dep => {
+            exec(`npm install ${dep}`, (err, stdout, stderr) => {
+                if (err) {
+                    console.error(`Error installing ${dep}:`, err);
+                    return;
+                }
+                console.log(`Successfully installed ${dep}`);
+                console.log(stdout);
+                console.error(stderr);
+            });
+        });
+    });
       console.log('Dependencies installed successfully!');
       process.exit(0);// Exit with success
     } catch {
@@ -22,18 +46,5 @@ program
   });
 
 // Input file processing
-program
-  .argument('<file>', 'Path to file containing URLs')
-  .description('Process a file of URLs')
-  .action((file) => {
-    const filePath = path.resolve(file);
-    if (fs.existsSync(filePath)) {
-      const data = fs.readFileSync(filePath, 'utf-8');
-      console.log('Processing URLs:', data.split('\n'));
-    } else {
-      console.error('File does not exist:', filePath);
-      process.exit(1);
-    }
-  });
 
 program.parse(process.argv);

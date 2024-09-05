@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
@@ -27,6 +28,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const commander_1 = require("commander");
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
+const child_process_1 = require("child_process");
 const program = new commander_1.Command();
 // Install command
 program
@@ -35,9 +37,31 @@ program
     .action(() => {
     try {
         console.log('Installing dependencies...');
-        // Example: Handle dependency installation
-        console.log('Dependencies installed successfully!');
-        process.exit(0); // Exit with success
+        fs.readFile('userland.txt', 'utf8', (err, data) => {
+            if (err) {
+                console.error('Error reading userland.txt:', err);
+                return;
+            }
+            else {
+                console.log('Dependencies:', data);
+            }
+            // Split the file contents by new lines to get an array of dependencies
+            const dependencies = data.split('\n').filter(dep => dep.trim() !== '');
+            // Install each dependency using npm
+            dependencies.forEach(dep => {
+                (0, child_process_1.exec)(`npm install ${dep}`, (err, stdout, stderr) => {
+                    if (err) {
+                        console.error(`Error installing ${dep}:`, err);
+                        return;
+                    }
+                    console.log(`Successfully installed ${dep}`);
+                    console.log(stdout);
+                    console.error(stderr);
+                });
+            });
+        });
+        // console.log('Dependencies installed successfully!');
+        // process.exit(0);// Exit with success
     }
     catch (_a) {
         console.error('Error installing dependencies');
