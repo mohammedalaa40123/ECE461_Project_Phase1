@@ -1,5 +1,4 @@
-import { Octokit } from "octokit";
-import AggregateError from "aggregate-error";
+import { Octokit } from "@octokit/core";
 import * as dotenv from "dotenv";
 dotenv.config();
 const env: NodeJS.ProcessEnv = process.env;
@@ -7,16 +6,16 @@ const env: NodeJS.ProcessEnv = process.env;
 const fetchPackageInfo = async (
   packageType: string,
   packageName: string,
-  org: string
+  userName: string = env.GITHUB_USERNAME as string
 ): Promise<JSON> => {
   const octokit = new Octokit({ auth: env.GITHUB_TOKEN });
   try {
     const response = await octokit.request(
-      `/orgs/{org}/packages/{package_type}/{package_name}`,
+      `/user/{username}/packages/{package_type}/{package_name}`,
       {
         package_type: packageType,
         package_name: packageName,
-        org: org,
+        username: userName,
         headers: {
           "X-GitHub-Api-Version": "2022-11-28",
         },
@@ -25,19 +24,16 @@ const fetchPackageInfo = async (
     console.log("Package info fetched successfully");
     return response.data as JSON;
   } catch (error) {
-    if (error instanceof AggregateError) {
-      for (const individualError of error.errors) {
-        console.error(individualError);
-      }
-    } else {
-      console.error("Error fetching package info:", error);
-    }
+    console.error("Error fetching package info:", error);
     throw error;
   }
 };
 
-fetchPackageInfo("container", "hello_docker", "microsoft").then((data) => {
+const packageInfo: Promise<void | JSON> = fetchPackageInfo(
+  "npm",
+  "hello-world-npm"
+).then((data) => {
   console.log(data);
 });
-
+console.log(packageInfo);
 export { fetchPackageInfo };

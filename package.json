@@ -1,9 +1,12 @@
 {
-  "name": "ECE461_Project_Phase1",
+  "name": "ece461_project_phase1",
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
-  "repository": "https://github.com/mohammed-alaa40123/ECE461_Project_Phase1.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mohammed-alaa40123/ECE461_Project_Phase1.git"
+  },
   "author": "mohammed-alaa40123 <mohammedalaa40123@gmail.com>",
   "license": "MIT",
   "bin": {
@@ -17,15 +20,18 @@
     "@octokit/plugin-paginate-rest": "^11.3.3",
     "@octokit/plugin-rest-endpoint-methods": "^13.2.4",
     "@octokit/webhooks": "^13.3.0",
+    "@types/express": "^4.17.21",
     "aggregate-error": "^5.0.0",
+    "axios": "^1.7.7",
     "commander": "^12.1.0",
     "dotenv": "^16.4.5",
+    "express": "^4.19.2",
     "fs": "^0.0.1-security",
     "jest": "^29.7.0",
     "node-ts": "^6.1.2",
+    "nodemon": "^3.1.4",
     "octokit": "^4.0.2",
-    "path": "^0.12.7",
-    "tsc": "^2.0.4"
+    "path": "^0.12.7"
   },
   "devDependencies": {
     "@octokit/types": "^13.5.0",
@@ -33,5 +39,13 @@
     "@types/node": "^22.5.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
-  }
+  },
+  "description": "ECE 461 Project Phase 1",
+  "scripts": {
+    "start": "tsc && node dist/api.js"
+  },
+  "bugs": {
+    "url": "https://github.com/mohammed-alaa40123/ECE461_Project_Phase1/issues"
+  },
+  "homepage": "https://github.com/mohammed-alaa40123/ECE461_Project_Phase1#readme"
 }
