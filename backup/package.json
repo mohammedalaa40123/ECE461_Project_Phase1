@@ -1,0 +1,23 @@
+{
+  "name": "ECE461_Project_Phase1",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/mohammed-alaa40123/ECE461_Project_Phase1.git",
+  "author": "mohammed-alaa40123 <mohammedalaa40123@gmail.com>",
+  "license": "MIT",
+  "bin": {
+    "cli": "Dist/install.js"
+  },
+  "dependencies": {
+    "@types/node": "^22.5.4",
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "fs": "^0.0.1-security",
+    "jest": "^29.7.0",
+    "node-ts": "^6.1.2",
+    "path": "^0.12.7",
+    "ts-node": "^10.9.2",
+    "tsc": "^2.0.4",
+    "typescript": "^5.5.4"
+  }
+}

@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Function to run the install mode
+install_mode() {
+    echo "Running install mode..."
+    ./Dist/cli.js install
+}
+
+# Function to run the URL_File mode
+url_file_mode() {
+    if [ -z "$1" ]; then
+        echo "Please provide a URL file."
+        exit 1
+    fi
+    URL_FILE="$1"
+    echo "Processing URL file: $URL_FILE"
+    # Add your URL file processing logic here
+}
+
+# Function to run the test mode
+test_mode() {
+    echo "Running tests..."
+    # Add your test command here
+}
+
+# Check the first argument
+case "$1" in
+  install)
+    install_mode
+    ;;
+  URL_File)
+    url_file_mode "$2"
+    ;;
+  test)
+    test_mode
+    ;;
+  *)
+    echo "Usage: $0 {install|URL_File|test}"
+    exit 1
+    ;;
+esac
