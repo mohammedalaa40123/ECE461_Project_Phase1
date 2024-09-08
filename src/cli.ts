@@ -60,7 +60,26 @@ program
   .description('Process a URL file')
   .action((file) => {
     console.log(`Processing URL file: ${file}`);
-    // Add your URL file processing logic here
+    fs.readFile(file, 'utf8', (err, data) => {
+      if (err) {
+        console.error(`Error reading ${file}:`, err);
+        process.exit(1);
+        return;
+      }
+
+      // Split the file contents by new lines to get an array of URLs
+      const urls = data.split('\n').filter(url => url.trim() !== '');
+
+      urls.forEach(url => {
+        if (url.includes('github.com')) {
+          console.log(`GitHub package: ${url}`);
+        } else if (url.includes('npmjs.com')) {
+          console.log(`npm package: ${url}`);
+        } else {
+          console.log(`Unknown package source: ${url}`);
+        }
+      });
+    });
   });
 
 // Test command

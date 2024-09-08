@@ -14,8 +14,8 @@ url_file_mode() {
     fi
     URL_FILE="$1"
     echo "Processing URL file: $URL_FILE"
-    # Add your URL file processing logic here
-}
+    ./dist/cli.js URL_File $URL_FILE
+    }
 
 # Function to run the test mode
 test_mode() {
