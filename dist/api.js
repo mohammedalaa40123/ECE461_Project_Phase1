@@ -11,27 +11,23 @@ import { Octokit } from "@octokit/core";
 import * as dotenv from "dotenv";
 dotenv.config();
 const env = process.env;
-const fetchPackageInfo = (packageType_1, packageName_1, ...args_1) => __awaiter(void 0, [packageType_1, packageName_1, ...args_1], void 0, function* (packageType, packageName, userName = env.GITHUB_USERNAME) {
-    const octokit = new Octokit({ auth: env.GITHUB_TOKEN });
-    try {
-        const response = yield octokit.request(`/user/{username}/packages/{package_type}/{package_name}`, {
-            package_type: packageType,
-            package_name: packageName,
-            username: userName,
-            headers: {
-                "X-GitHub-Api-Version": "2022-11-28",
-            },
-        });
-        console.log("Package info fetched successfully");
-        return response.data;
-    }
-    catch (error) {
-        console.error("Error fetching package info:", error);
-        throw error;
-    }
-});
-const packageInfo = fetchPackageInfo("npm", "hello-world-npm").then((data) => {
-    console.log(data);
-});
-console.log(packageInfo);
-export { fetchPackageInfo };
+export default function fetchPackageInfo(owner, repo) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const octokit = new Octokit({ auth: env.GITHUB_TOKEN });
+        try {
+            const response = yield octokit.request("GET /repos/{owner}/{repo}", {
+                owner: owner,
+                repo: repo,
+                headers: {
+                    "X-GitHub-Api-Version": "2022-11-28",
+                },
+            });
+            console.log("Package info fetched successfully");
+            return response.data;
+        }
+        catch (error) {
+            console.error("Error fetching package info:", error);
+            throw error;
+        }
+    });
+}

@@ -9,7 +9,7 @@
   "author": "mohammed-alaa40123 <mohammedalaa40123@gmail.com>",
   "license": "MIT",
   "bin": {
-    "cli": "Dist/install.js"
+    "cli": "./dist/install.js"
   },
   "dependencies": {
     "@octokit/app": "^15.1.0",
@@ -42,9 +42,6 @@
     "typescript": "^5.5.4"
   },
   "description": "ECE 461 Project Phase 1",
-  "scripts": {
-    "start": "tsc && node dist/api.js"
-  },
   "bugs": {
     "url": "https://github.com/mohammed-alaa40123/ECE461_Project_Phase1/issues"
   },

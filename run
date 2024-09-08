@@ -3,7 +3,7 @@
 # Function to run the install mode
 install_mode() {
     echo "Running install mode..."
-    ./Dist/cli.js install
+    ./dist/cli.js install
 }
 
 # Function to run the URL_File mode
