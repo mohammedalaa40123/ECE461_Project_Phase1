@@ -1,13 +1,4 @@
 #!/usr/bin/env node
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 import { Command } from 'commander';
 import * as fs from 'fs';
 import { exec } from 'child_process';
@@ -33,7 +24,7 @@ program
     .description('Install dependencies in userland')
     .action(() => {
     console.log('Installing dependencies...');
-    fs.readFile('userland.txt', 'utf8', (err, data) => __awaiter(void 0, void 0, void 0, function* () {
+    fs.readFile('userland.txt', 'utf8', async (err, data) => {
         if (err) {
             console.error('Error reading userland.txt:', err);
             process.exit(1);
@@ -42,16 +33,16 @@ program
         const dependencies = data.split('\n').filter(dep => dep.trim() !== '');
         try {
             for (const dep of dependencies) {
-                yield installDependency(dep);
+                await installDependency(dep);
             }
             console.log('Dependencies installed successfully!');
             process.exit(0);
         }
-        catch (_a) {
+        catch {
             console.error('Error installing dependencies');
             process.exit(1);
         }
-    }));
+    });
 });
 program
     .command('URL_File <file>')

@@ -1,20 +1,18 @@
 import { Octokit } from "@octokit/core";
 import * as dotenv from "dotenv";
 import axios from 'axios';
-const NPM_REGISTRY_URL = 'https://registry.npmjs.org';
+const NPM_REGISTRY_URL = 'https://registry.npmjs.org/-/v1/search?text=$';
 dotenv.config();
 const env: NodeJS.ProcessEnv = process.env;
+
 export abstract class API{
   protected package_name: string;
   constructor(name: string){
     this.package_name=name;
-
   }
   public abstract getData():any
-
-
-
 }
+
 export class Git_Hub extends API{
   private owner_name: string;
   constructor(p_name:string ,own_name:string){

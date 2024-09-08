@@ -1,11 +1,26 @@
-import fetchRepo from "./api.js";
-fetchRepo("RezaSh798", "adder-ts").then((data) => {
-    if (data) {
-        const data_obj = data;
-        const data_info = {
-            full_name: data_obj.full_name,
-            git_url: data_obj.git_url,
-        };
-        console.log(data_info);
-    }
+#!/usr/bin/env node
+import { Command } from 'commander';
+import { InstallCommand } from './commands/InstallCommand.js';
+;
+import { URLFileCommand } from './commands/URLFileCommand.js';
+import { TestCommand } from './commands/TestCommand.js';
+const program = new Command();
+program
+    .command('install')
+    .description('Install dependencies in userland')
+    .action(() => {
+    InstallCommand.run();
 });
+program
+    .command('URL_File <file>')
+    .description('Process a URL file')
+    .action((file) => {
+    URLFileCommand.run(file);
+});
+program
+    .command('test')
+    .description('Run tests')
+    .action(() => {
+    TestCommand.run();
+});
+program.parse(process.argv);
